@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { SAMPLE_BOOKS } from '@/data/sampleBooks';
 import { supabase } from '@/integrations/supabase/client';
 import { Book } from '@/data/books';
 import { toast } from 'sonner';
@@ -79,9 +80,15 @@ export function useBooks(filters?: BookFilters) {
       }
 
       const { data, error } = await query;
-      if (error) throw error;
 
-      let books = (data || []).map(mapBookRow);
+      let books = !error && data && data.length > 0 ? data.map(mapBookRow) : [...SAMPLE_BOOKS];
+      if (error || !data?.length) {
+        const q = filters?.search?.toLowerCase();
+        if (q) books = books.filter(b => `${b.title} ${b.author_name} ${b.synopsis}`.toLowerCase().includes(q));
+        if (filters?.isFree !== undefined) books = books.filter(b => b.is_free === filters.isFree);
+        if (filters?.sortBy === 'popular') books.sort((a, b) => (b.total_reads || 0) - (a.total_reads || 0));
+        if (filters?.sortBy === 'rating') books.sort((a, b) => (b.rating_avg || 0) - (a.rating_avg || 0));
+      }
 
       // Client-side category filter by name
       if (filters?.category) {
@@ -190,6 +197,8 @@ export function useBook(id: string) {
   return useQuery({
     queryKey: ['book', id],
     queryFn: async () => {
+      const sample = SAMPLE_BOOKS.find(b => b.id === id);
+      if (sample) return sample;
       const { data, error } = await supabase
         .from('books')
         .select('*, categories(name)')

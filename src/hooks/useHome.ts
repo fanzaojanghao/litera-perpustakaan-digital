@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import type { Book } from '@/data/books';
+import { SAMPLE_BOOKS } from '@/data/sampleBooks';
 
 /** Baris buku mentah -> tipe Book yang dipakai BookCard. */
 function mapRow(row: any): Book {
@@ -52,9 +53,11 @@ export function useHomeFeed() {
         .order('created_at', { ascending: false })
         .limit(200);
 
-      if (error) throw error;
-      const all = (data || []).map(mapRow);
-      const raw = data || [];
+      const live = !error && data && data.length > 0;
+      const all = live ? data.map(mapRow) : SAMPLE_BOOKS;
+      const raw: any[] = live
+        ? data
+        : SAMPLE_BOOKS.map((b, i) => ({ id: b.id, created_at: new Date(Date.now() - i * 3 * 86400000).toISOString() }));
 
       const byReads = [...all].sort((a, b) => (b.total_reads || 0) - (a.total_reads || 0));
       const byRating = [...all]
