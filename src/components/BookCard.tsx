@@ -38,11 +38,11 @@ function BookCardBase({ book }: BookCardProps) {
       className="group flex flex-col rounded-xl outline-none transition-transform duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
     >
       {/* Cover — rasio 3:4 dengan smart crop */}
-      <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-sm ring-1 ring-border transition-shadow duration-200 group-hover:shadow-md">
+      <div className="relative aspect-[3/4] overflow-hidden rounded-xl bg-muted shadow-sm border-2 border-foreground">
         <img
           src={book.cover || '/logo_litera.png'}
           alt={`Sampul buku ${book.title}`}
-          className="h-full w-full object-cover object-center transition-transform duration-300 group-hover:scale-[1.04]"
+          className="h-full w-full object-cover object-center"
           loading="lazy"
           decoding="async"
         />

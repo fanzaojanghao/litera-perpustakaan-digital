@@ -25,8 +25,8 @@
     --text-secondary: #526171;
     --text-muted: #708090;
 
-    --background: 40 25% 97%;
-    --foreground: 212 47% 12%;
+    --background: 40 20% 97%;
+    --foreground: 222 47% 11%;
     --card: 0 0% 100%;
     --card-foreground: 212 47% 12%;
     --popover: 0 0% 100%;
@@ -37,12 +37,12 @@
     --secondary-foreground: 0 0% 100%;
     --muted: 210 18% 94%;
     --muted-foreground: 210 10% 42%;
-    --accent: 163 53% 65%;
+    --accent: 184 38% 88%;
     --accent-foreground: 212 47% 12%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 210 20% 88%;
-    --input: 210 20% 88%;
+    --border: 222 47% 11%;
+    --input: 222 47% 11%;
     --ring: 184 38% 48%;
 
     --bg-main:
@@ -555,3 +555,65 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+
+/* ============================================================
+   LITERA — CLEAN TEAL NEOBRUTALISM (final override layer)
+   ============================================================ */
+:root {
+  --nb-ink: hsl(222 47% 11%);
+  --nb-shadow: 3px 3px 0 0 var(--nb-ink);
+  --nb-shadow-sm: 2px 2px 0 0 var(--nb-ink);
+  --radius: 4px;
+}
+body { background: hsl(var(--background)) !important; color: hsl(var(--foreground)); }
+body::before, body::after { display: none !important; }
+* { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+.glass, .glass-soft, .glass-strong, .glass-card, .card, .gradient-card, .dialog, .modal,
+.popover, .dropdown-menu, .bottom-sheet, .top-sheet, .sidebar {
+  background: hsl(var(--card)) !important;
+  border: 2px solid var(--nb-ink) !important;
+  border-radius: 4px !important;
+  box-shadow: var(--nb-shadow) !important;
+}
+.glass-nav {
+  background: hsl(var(--card)) !important;
+  border-bottom: 2px solid var(--nb-ink) !important;
+  box-shadow: none !important;
+}
+.shadow-card, .shadow-glow, .hover-lift { box-shadow: var(--nb-shadow) !important; }
+.gradient-hero { background: hsl(var(--primary)) !important; }
+
+.apple-button, .glass-button-outline, .button-gray, .button-destructive,
+.button-success, .button-warning, .button-info, .button-pink {
+  border: 2px solid var(--nb-ink) !important;
+  border-radius: 4px !important;
+  box-shadow: var(--nb-shadow-sm) !important;
+  font-weight: 700 !important;
+  transition: transform 120ms ease, box-shadow 120ms ease !important;
+}
+.apple-button { background: hsl(var(--primary)) !important; color: hsl(var(--primary-foreground)) !important; }
+.glass-button-outline { background: hsl(var(--card)) !important; color: hsl(var(--foreground)) !important; }
+.button-gray { background: hsl(var(--accent)) !important; color: hsl(var(--foreground)) !important; }
+.apple-button:hover, .glass-button-outline:hover, .button-gray:hover, .button-destructive:hover {
+  transform: translate(-1px,-1px); box-shadow: var(--nb-shadow) !important; filter: none !important;
+}
+.apple-button:active, .glass-button-outline:active, .button-gray:active, .button-destructive:active {
+  transform: translate(2px,2px); box-shadow: none !important;
+}
+.button-ghost { border-radius: 4px !important; box-shadow: none !important; }
+
+input, textarea, select, .glass-input, .input-glass {
+  border: 2px solid var(--nb-ink) !important;
+  border-radius: 4px !important;
+  background: hsl(var(--card)) !important;
+  box-shadow: none !important;
+}
+input:focus, textarea:focus, .glass-input:focus { box-shadow: var(--nb-shadow-sm) !important; outline: none !important; }
+.badge { border: 2px solid var(--nb-ink) !important; border-radius: 2px !important; font-weight: 700; }
+
+/* Flatten soft rounding globally for a formal, tidy look */
+.rounded, .rounded-md, .rounded-lg, .rounded-xl, .rounded-2xl, .rounded-3xl, .rounded-full:not(.nb-round) { border-radius: 4px !important; }
+.shadow, .shadow-sm, .shadow-md, .shadow-lg, .shadow-xl, .shadow-2xl { box-shadow: var(--nb-shadow) !important; }
+img.rounded-full, .avatar, [class*="Avatar"] { border-radius: 9999px !important; }
